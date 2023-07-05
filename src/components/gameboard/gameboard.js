@@ -1,6 +1,4 @@
-const createBoard = () => {
-  const col = 10;
-  const row = 10;
+const createBoard = (col, row) => {
   const board = [];
 
   for (let i = 0; i < col; i += 1) {
@@ -18,9 +16,13 @@ const createBoard = () => {
   return board;
 };
 
+const getRandomCoord = (max) => Math.floor(Math.random() * max);
+
 class Gameboard {
   constructor() {
-    this.board = createBoard();
+    this.maxCol = 10;
+    this.maxRow = 10;
+    this.board = createBoard(this.maxCol, this.maxRow);
     this.ships = [];
   }
 
@@ -43,7 +45,7 @@ class Gameboard {
     return true;
   }
 
-  recieveAttack(row, col) {
+  recieveAttack(row = getRandomCoord(this.maxRow), col = getRandomCoord(this.maxCol)) {
     const coords = this.board.find((cell) => cell.row === row && cell.col === col);
 
     if (coords.isHit || coords.isMiss) return null;

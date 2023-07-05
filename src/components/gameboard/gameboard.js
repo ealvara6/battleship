@@ -9,6 +9,8 @@ const createBoard = () => {
         col: j,
         row: i,
         ship: null,
+        isHit: false,
+        isMiss: false,
       });
     }
   }
@@ -21,11 +23,12 @@ class Gameboard {
     this.board = createBoard();
   }
 
-  placeShip(row, col, ship) {
+  placeShip(row, col, ship, isXAxis) {
     const coords = [];
 
     for (let i = 0; i < ship.length; i += 1) {
-      coords.push(this.board.find((cell) => cell.row === row && cell.col === col + i));
+      if (isXAxis) coords.push(this.board.find((cell) => cell.row === row && cell.col === col + i));
+      else coords.push(this.board.find((cell) => cell.row === row + i && cell.col === col));
     }
 
     if (coords.some((coord) => !coord)) return false;
@@ -35,6 +38,22 @@ class Gameboard {
       const tmpCoord = coord;
       tmpCoord.ship = ship;
     });
+    return true;
+  }
+
+  recieveAttack(row, col) {
+    const coords = this.board.find((cell) => cell.row === row && cell.col === col);
+
+    if (coords.isHit || coords.isMiss) return null;
+
+    if (!coords.ship) {
+      coords.isMiss = true;
+      return false;
+    }
+
+    coords.ship.hit();
+    coords.isHit = true;
+
     return true;
   }
 }

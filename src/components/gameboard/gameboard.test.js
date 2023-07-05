@@ -45,7 +45,7 @@ describe('place ship on board', () => {
 
 describe('gameboard recieves an attack', () => {
   const gameboard = new Gameboard();
-  const ship = new Ship(4);
+  const ship = new Ship(2);
   gameboard.placeShip(0, 0, ship, true);
 
   describe('attack hits a ship', () => {
@@ -75,5 +75,30 @@ describe('gameboard recieves an attack', () => {
   test('same coordinate is attacked', () => {
     expect(gameboard.recieveAttack(0, 0)).toBe(null);
     expect(gameboard.recieveAttack(5, 5)).toBe(null);
+  });
+});
+
+describe('check if all ships are sunk', () => {
+  const gameboard = new Gameboard();
+  const ship1 = new Ship(2);
+  const ship2 = new Ship(3);
+
+  gameboard.placeShip(0, 0, ship1, true);
+  gameboard.placeShip(5, 5, ship2, false);
+
+  test('all ships are not sunk', () => {
+    expect(gameboard.allShipsSunk()).toBeFalsy();
+  });
+
+  test('all ships are sunk', () => {
+    // ship 1 is sunk
+    gameboard.recieveAttack(0, 0);
+    gameboard.recieveAttack(0, 1);
+    // ship 2 is sunk
+    gameboard.recieveAttack(5, 5);
+    gameboard.recieveAttack(6, 5);
+    gameboard.recieveAttack(7, 5);
+
+    expect(gameboard.allShipsSunk()).toBeTruthy();
   });
 });

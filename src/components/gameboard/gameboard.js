@@ -21,6 +21,7 @@ const createBoard = () => {
 class Gameboard {
   constructor() {
     this.board = createBoard();
+    this.ships = [];
   }
 
   placeShip(row, col, ship, isXAxis) {
@@ -34,6 +35,7 @@ class Gameboard {
     if (coords.some((coord) => !coord)) return false;
     if (coords.some((coord) => coord.ship)) return false;
 
+    this.ships.push(ship);
     coords.forEach((coord) => {
       const tmpCoord = coord;
       tmpCoord.ship = ship;
@@ -43,6 +45,7 @@ class Gameboard {
 
   recieveAttack(row, col) {
     const coords = this.board.find((cell) => cell.row === row && cell.col === col);
+    // console.log(coords);
 
     if (coords.isHit || coords.isMiss) return null;
 
@@ -55,6 +58,12 @@ class Gameboard {
     coords.isHit = true;
 
     return true;
+  }
+
+  allShipsSunk() {
+    if (this.ships.every((ship) => ship.isSunk())) return true;
+
+    return false;
   }
 }
 

@@ -38,7 +38,9 @@ describe('place ship on board', () => {
   test('ship occupies bottom vertical cells based on length', () => {
     const ship = new Ship(2);
     gameboard.placeShip(3, 5, ship, false);
+    // expect ship to occupy cell [3, 5]
     expect(gameboard.board.find((cell) => cell.row === 3 && cell.col === 5).ship).toBe(ship);
+    // expect ship to occupy cell [4, 5]
     expect(gameboard.board.find((cell) => cell.row === 4 && cell.col === 5).ship).toBe(ship);
   });
 });

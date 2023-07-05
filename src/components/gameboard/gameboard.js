@@ -45,7 +45,6 @@ class Gameboard {
 
   recieveAttack(row, col) {
     const coords = this.board.find((cell) => cell.row === row && cell.col === col);
-    // console.log(coords);
 
     if (coords.isHit || coords.isMiss) return null;
 

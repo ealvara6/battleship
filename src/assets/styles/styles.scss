@@ -1,0 +1,57 @@
+@use '_reset.scss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: 'Roboto';
+}
+
+#container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 100px 1fr;
+  width: 75vw;
+  height: 75vh;
+  border: 1px solid black;
+}
+
+#title {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  align-self: center;
+  justify-self: center;
+  font-weight: bold;
+  font-size: 3rem;
+}
+
+.gameboard {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 50px 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.name {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+
+}
+.has-ship {
+  background-color: grey;
+}

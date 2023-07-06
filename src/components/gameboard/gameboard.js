@@ -45,7 +45,7 @@ class Gameboard {
     return true;
   }
 
-  recieveAttack(row = getRandomCoord(this.maxRow), col = getRandomCoord(this.maxCol)) {
+  receiveAttack(row = getRandomCoord(this.maxRow), col = getRandomCoord(this.maxCol)) {
     const coords = this.board.find((cell) => cell.row === row && cell.col === col);
 
     if (coords.isHit || coords.isMiss) return null;

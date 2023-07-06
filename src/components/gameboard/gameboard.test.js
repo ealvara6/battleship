@@ -52,7 +52,7 @@ describe('gameboard recieves an attack', () => {
 
   describe('attack hits a ship', () => {
     test('ship is hit', () => {
-      expect(gameboard.recieveAttack(0, 0)).toBeTruthy();
+      expect(gameboard.receiveAttack(0, 0)).toBeTruthy();
     });
 
     test('ship hit function called', () => {
@@ -66,7 +66,7 @@ describe('gameboard recieves an attack', () => {
 
   describe('missed attack', () => {
     test('attack misses', () => {
-      expect(gameboard.recieveAttack(5, 5)).toBeFalsy();
+      expect(gameboard.receiveAttack(5, 5)).toBeFalsy();
     });
 
     test('missed coordinates are logged', () => {
@@ -75,8 +75,8 @@ describe('gameboard recieves an attack', () => {
   });
 
   test('same coordinate is attacked', () => {
-    expect(gameboard.recieveAttack(0, 0)).toBe(null);
-    expect(gameboard.recieveAttack(5, 5)).toBe(null);
+    expect(gameboard.receiveAttack(0, 0)).toBe(null);
+    expect(gameboard.receiveAttack(5, 5)).toBe(null);
   });
 });
 
@@ -94,12 +94,12 @@ describe('check if all ships are sunk', () => {
 
   test('all ships are sunk', () => {
     // ship 1 is sunk
-    gameboard.recieveAttack(0, 0);
-    gameboard.recieveAttack(0, 1);
+    gameboard.receiveAttack(0, 0);
+    gameboard.receiveAttack(0, 1);
     // ship 2 is sunk
-    gameboard.recieveAttack(5, 5);
-    gameboard.recieveAttack(6, 5);
-    gameboard.recieveAttack(7, 5);
+    gameboard.receiveAttack(5, 5);
+    gameboard.receiveAttack(6, 5);
+    gameboard.receiveAttack(7, 5);
 
     expect(gameboard.allShipsSunk()).toBeTruthy();
   });

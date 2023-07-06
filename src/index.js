@@ -18,17 +18,29 @@ const createPlayerName = (playerName) => {
   return name;
 };
 
+const createCell = (player, item) => {
+  const cell = document.createElement('div');
+  cell.className = 'cell';
+  if (item.ship && player.isHuman) cell.className = 'cell has-ship';
+  else cell.className = 'cell no-ship';
+
+  cell.addEventListener('click', () => {
+    if (item.isHit || item.isMiss) return;
+    player.gameboard.receiveAttack(item.row, item.col);
+    if (item.isHit) cell.classList.add('hit');
+    if (item.isMiss) cell.classList.add('miss');
+  });
+
+  return cell;
+};
+
 const createBoard = (playerName) => {
   const board = document.createElement('div');
   board.className = 'board';
 
-  PubSub.subscribe(playerName, (msg, gameboard) => {
-    gameboard.board.forEach((item) => {
-      const cell = document.createElement('div');
-      cell.className = 'cell';
-      if (item.ship) cell.className = 'cell has-ship';
-      else cell.className = 'cell no-ship';
-      board.appendChild(cell);
+  PubSub.subscribe(playerName, (msg, player) => {
+    player.gameboard.board.forEach((item) => {
+      board.appendChild(createCell(player, item));
     });
   });
 

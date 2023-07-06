@@ -27,10 +27,10 @@ const game = () => {
   const aiYCoords = [0, 5, 6, 4, 5];
 
   populateBoard(player.gameboard, playerXCoords, playerYCoords);
-  PubSub.publish('player 1', player.gameboard);
+  PubSub.publish('player 1', player);
 
   populateBoard(ai.gameboard, aiXCoords, aiYCoords);
-  PubSub.publish('ai', ai.gameboard);
+  PubSub.publish('ai', ai);
 };
 
 export default game;

@@ -2,7 +2,14 @@ import PubSub from 'pubsub-js';
 import './assets/styles/styles.scss';
 import game from './components/game';
 
-// console.log()
+PubSub.subscribe('game over', (msg, player) => {
+  const parent = document.getElementById('container');
+  const element = document.createElement('div');
+  element.className = 'game-over';
+  element.innerHTML = `${player.name} has won!`;
+
+  parent.appendChild(element);
+});
 
 const createTitle = () => {
   const title = document.createElement('div');
@@ -23,8 +30,8 @@ const createPlayerName = (playerName) => {
 const createCell = (player, item) => {
   const cell = document.createElement('div');
   cell.className = 'cell';
-  if (item.ship && player.isHuman) cell.className = 'cell has-ship';
-  else cell.className = 'cell no-ship';
+  if (item.ship) cell.className = 'cell has-ship';
+  // else cell.className = 'cell no-ship';
   if (item.isHit) cell.classList.add('hit');
   if (item.isMiss) cell.classList.add('miss');
 

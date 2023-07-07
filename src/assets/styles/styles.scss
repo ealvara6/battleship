@@ -12,7 +12,8 @@ body {
 #container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 100px 1fr;
+  grid-template-rows: 100px 50px 1fr;
+  row-gap: 30px;
   width: 75vw;
   height: 75vh;
   border: 1px solid black;
@@ -31,7 +32,8 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 50px 1fr;
-  align-items: center;
+  grid-row: 3;
+  align-items: start;
   justify-items: center;
 }
 
@@ -62,4 +64,13 @@ body {
 
 .miss {
   background-color: blue;
+}
+
+.game-over {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  align-self: center;
+  justify-self: center;
+  font-weight: bold;
+  font-size: 30px;
 }

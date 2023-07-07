@@ -19,6 +19,18 @@ const populateBoard = (gameboard, xCoords, yCoords) => {
 
 const getRandomCoord = (max) => Math.floor(Math.random() * max);
 
+const isGameOver = (player, ai) => {
+  if (player.gameboard.allShipsSunk()) {
+    PubSub.publish('game over', ai);
+    return true;
+  }
+  if (ai.gameboard.allShipsSunk()) {
+    PubSub.publish('game over', player);
+  }
+
+  return false;
+};
+
 const game = () => {
   const player = new Player(true, new Gameboard(), 'player 1');
   const playerXCoords = [0, 3, 6, 8, 9];
@@ -35,6 +47,7 @@ const game = () => {
   PubSub.publish('ai', ai);
 
   PubSub.subscribe('ai turn', () => {
+    if (isGameOver(player, ai)) return;
     let legalMove = false;
     do {
       const row = getRandomCoord(player.gameboard.maxRow);

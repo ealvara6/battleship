@@ -17,20 +17,33 @@ const populateBoard = (gameboard, xCoords, yCoords) => {
   });
 };
 
+const getRandomCoord = (max) => Math.floor(Math.random() * max);
+
 const game = () => {
-  const player = new Player(true, new Gameboard());
+  const player = new Player(true, new Gameboard(), 'player 1');
   const playerXCoords = [0, 3, 6, 8, 9];
   const playerYCoords = [0, 3, 6, 3, 3];
 
-  const ai = new Player(false, new Gameboard());
+  const ai = new Player(false, new Gameboard(), 'ai');
   const aiXCoords = [0, 5, 9, 0, 4];
   const aiYCoords = [0, 5, 6, 4, 5];
 
   populateBoard(player.gameboard, playerXCoords, playerYCoords);
-  PubSub.publish('player 1', player);
-
   populateBoard(ai.gameboard, aiXCoords, aiYCoords);
+
+  PubSub.publish('player 1', player);
   PubSub.publish('ai', ai);
+
+  PubSub.subscribe('ai turn', () => {
+    let legalMove = false;
+    do {
+      const row = getRandomCoord(player.gameboard.maxRow);
+      const col = getRandomCoord(player.gameboard.maxCol);
+      legalMove = player.gameboard.receiveAttack(row, col);
+    }
+    while (!legalMove);
+    PubSub.publish('player 1', player);
+  });
 };
 
 export default game;

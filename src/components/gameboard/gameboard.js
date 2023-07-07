@@ -16,8 +16,6 @@ const createBoard = (col, row) => {
   return board;
 };
 
-const getRandomCoord = (max) => Math.floor(Math.random() * max);
-
 class Gameboard {
   constructor() {
     this.maxCol = 10;
@@ -45,18 +43,17 @@ class Gameboard {
     return true;
   }
 
-  receiveAttack(row = getRandomCoord(this.maxRow), col = getRandomCoord(this.maxCol)) {
+  receiveAttack(row, col) {
     const coords = this.board.find((cell) => cell.row === row && cell.col === col);
 
-    if (coords.isHit || coords.isMiss) return null;
+    if (coords.isHit || coords.isMiss) return false;
 
     if (!coords.ship) {
       coords.isMiss = true;
-      return false;
+    } else {
+      coords.ship.hit();
+      coords.isHit = true;
     }
-
-    coords.ship.hit();
-    coords.isHit = true;
 
     return true;
   }

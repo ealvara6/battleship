@@ -1,5 +1,6 @@
 class Player {
-  constructor(isHuman, gameboard) {
+  constructor(isHuman, gameboard, name) {
+    this.name = name;
     this.isHuman = isHuman;
     this.gameboard = gameboard;
   }

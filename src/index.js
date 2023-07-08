@@ -25,7 +25,7 @@ PubSub.subscribe('game over', (msg, player) => {
   retryButton.addEventListener('click', () => {
     while (document.body.firstChild) document.body.removeChild(document.body.firstChild);
     isGameOver = false;
-    game();
+    // game();
     document.body.appendChild(component());
   });
 });
@@ -123,4 +123,3 @@ PubSub.subscribe('start game', (msg, shipCoords) => {
   parent.removeChild(setup);
   game(shipCoords);
 });
-// game();

@@ -12,7 +12,7 @@ body {
 #container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 100px 50px 1fr;
+  grid-template-rows: 100px 50px 1fr 100px;
   row-gap: 30px;
   width: 75vw;
   height: 75vh;
@@ -73,4 +73,13 @@ body {
   justify-self: center;
   font-weight: bold;
   font-size: 30px;
+}
+
+#retry {
+  grid-row: 4;
+  grid-column: 1/-1;
+  justify-self: center;
+  align-self: center;
+  width: 100px;
+  height: 50px;
 }

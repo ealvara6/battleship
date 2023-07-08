@@ -26,6 +26,7 @@ const isGameOver = (player, ai) => {
   }
   if (ai.gameboard.allShipsSunk()) {
     PubSub.publish('game over', player);
+    return true;
   }
 
   return false;
@@ -43,20 +44,23 @@ const game = () => {
   populateBoard(player.gameboard, playerXCoords, playerYCoords);
   populateBoard(ai.gameboard, aiXCoords, aiYCoords);
 
-  PubSub.publish('player 1', player);
-  PubSub.publish('ai', ai);
-
-  PubSub.subscribe('ai turn', () => {
-    if (isGameOver(player, ai)) return;
-    let legalMove = false;
-    do {
-      const row = getRandomCoord(player.gameboard.maxRow);
-      const col = getRandomCoord(player.gameboard.maxCol);
-      legalMove = player.gameboard.receiveAttack(row, col);
-    }
-    while (!legalMove);
-    PubSub.publish('player 1', player);
-  });
+  PubSub.publish('players', { player1: player, player2: ai });
 };
 
-export default game;
+const turn = (player, opponent, row, col) => {
+  player.gameboard.receiveAttack(row, col);
+  if (isGameOver(player, opponent)) return;
+  let legalMove = false;
+  do {
+    const randomRow = getRandomCoord(player.gameboard.maxRow);
+    const randomCol = getRandomCoord(player.gameboard.maxCol);
+    legalMove = opponent.gameboard.receiveAttack(randomRow, randomCol);
+  }
+  while (!legalMove);
+  PubSub.publish('player', opponent);
+};
+
+export {
+  game,
+  turn,
+};

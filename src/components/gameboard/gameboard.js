@@ -31,6 +31,7 @@ class Gameboard {
       if (isXAxis) coords.push(this.board.find((cell) => cell.row === row && cell.col === col + i));
       else coords.push(this.board.find((cell) => cell.row === row + i && cell.col === col));
     }
+    console.log(coords);
 
     if (coords.some((coord) => !coord)) return false;
     if (coords.some((coord) => coord.ship)) return false;

@@ -9,17 +9,26 @@ const getRandomAxis = () => {
   return (value !== 0);
 };
 
-const populateBoard = (gameboard) => {
+const populateBoard = (player, coords) => {
   const ships = [new Ship(5), new Ship(4), new Ship(3), new Ship(3), new Ship(2)];
 
-  ships.forEach((ship) => {
-    let legalPlacement = false;
-    do {
-      const xCoord = getRandomCoord(gameboard.maxRow);
-      const yCoord = getRandomCoord(gameboard.maxCol);
-      if (gameboard.placeShip(xCoord, yCoord, ship, getRandomAxis())) legalPlacement = true;
-    } while (!legalPlacement);
-  });
+  if (!player.isHuman) {
+    ships.forEach((ship) => {
+      let legalPlacement = false;
+      do {
+        const xCoord = getRandomCoord(player.gameboard.maxRow);
+        const yCoord = getRandomCoord(player.gameboard.maxCol);
+        if (player.gameboard.placeShip(xCoord, yCoord, ship, getRandomAxis())) {
+          legalPlacement = true;
+        }
+      } while (!legalPlacement);
+    });
+  } else {
+    ships.forEach((ship) => {
+      const coord = coords.shift();
+      player.gameboard.placeShip(coord[0], coord[1], ship, coord[2]);
+    });
+  }
 };
 
 const isGameOver = (player, ai) => {
@@ -31,12 +40,12 @@ const isGameOver = (player, ai) => {
   }
 };
 
-const game = () => {
+const game = (shipCoords) => {
   const player = new Player(true, new Gameboard(), 'player 1');
   const ai = new Player(false, new Gameboard(), 'ai');
 
-  populateBoard(player.gameboard);
-  populateBoard(ai.gameboard);
+  populateBoard(player, shipCoords);
+  populateBoard(ai);
 
   PubSub.publish('players', { player1: player, player2: ai });
 };

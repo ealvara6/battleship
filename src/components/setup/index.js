@@ -30,7 +30,7 @@ const handleMouseEnter = (row, col, isXAxis, isClick, length) => {
     cellElements.push(item);
   });
 
-  if (isClick && cellElements.some((item) => item.classList.contains('has-ship'))) return;
+  if (isClick && cellElements.some((item) => item.classList.contains('has-ship'))) return false;
 
   cellElements.forEach((item) => {
     const tempItem = item;
@@ -41,7 +41,10 @@ const handleMouseEnter = (row, col, isXAxis, isClick, length) => {
   });
   if (isClick) {
     PubSub.publish('next ship');
+    return true;
   }
+
+  return true;
 };
 
 const handleMouseLeave = () => {
@@ -60,7 +63,7 @@ const createCell = (row, col) => {
   const ships = [5, 4, 3, 3, 2];
   PubSub.subscribe('next ship', () => {
     ships.shift();
-    if (ships.length === 0) PubSub.publish('start game');
+    if (ships.length === 0) PubSub.publish('activate start button');
   });
 
   let isXAxis = true;
@@ -75,7 +78,9 @@ const createCell = (row, col) => {
   cell.addEventListener('mouseleave', () => handleMouseLeave());
   cell.addEventListener('click', () => {
     const coords = cell.getAttribute('value').split(',');
-    handleMouseEnter(coords[0], coords[1], isXAxis, true, ships[0]);
+    if (handleMouseEnter(coords[0], coords[1], isXAxis, true, ships[0])) {
+      PubSub.publish('add ship', [row, col, isXAxis]);
+    }
   });
 
   return cell;
@@ -99,9 +104,18 @@ const createStart = () => {
   start.id = 'start';
   start.innerHTML = 'Start';
   start.disabled = true;
+  const shipCoords = [];
 
-  PubSub.subscribe('start game', () => {
+  PubSub.subscribe('add ship', (msg, coords) => {
+    shipCoords.push(coords);
+  });
+
+  PubSub.subscribe('activate start button', () => {
     start.disabled = false;
+  });
+
+  start.addEventListener('click', () => {
+    PubSub.publish('start game', shipCoords);
   });
 
   return start;

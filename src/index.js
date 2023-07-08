@@ -116,4 +116,11 @@ const component = () => {
 };
 
 document.body.appendChild(component());
+
+PubSub.subscribe('start game', (msg, shipCoords) => {
+  const parent = document.getElementById('container');
+  const setup = document.getElementById('setup');
+  parent.removeChild(setup);
+  game(shipCoords);
+});
 // game();

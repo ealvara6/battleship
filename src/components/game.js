@@ -10,7 +10,7 @@ const getRandomAxis = () => {
 };
 
 const populateBoard = (gameboard) => {
-  const ships = [new Ship(2), new Ship(3), new Ship(3), new Ship(4), new Ship(5)];
+  const ships = [new Ship(5), new Ship(4), new Ship(3), new Ship(3), new Ship(2)];
 
   ships.forEach((ship) => {
     let legalPlacement = false;
@@ -25,34 +25,15 @@ const populateBoard = (gameboard) => {
 const isGameOver = (player, ai) => {
   if (player.gameboard.allShipsSunk()) {
     PubSub.publish('game over', ai);
-    return true;
   }
   if (ai.gameboard.allShipsSunk()) {
     PubSub.publish('game over', player);
-    return true;
   }
-
-  return false;
 };
 
 const game = () => {
   const player = new Player(true, new Gameboard(), 'player 1');
-
-  // const playerXCoords = [];
-  // const playerYCoords = [];
-  // for (let i = 0; i < player.gameboard.maxRow; i += 1) {
-  //   playerXCoords.push(getRandomCoord(player.gameboard.maxRow));
-  //   playerYCoords.push(getRandomCoord(player.gameboard.maxCol));
-  // }
-
   const ai = new Player(false, new Gameboard(), 'ai');
-  // const aiXCoords = [];
-  // const aiYCoords = [];
-
-  // for (let i = 0; i < ai.gameboard.maxCol; i += 1) {
-  //   aiXCoords.push(getRandomCoord(ai.gameboard.maxRow));
-  //   aiYCoords.push(getRandomCoord(ai.gameboard.maxCol));
-  // }
 
   populateBoard(player.gameboard);
   populateBoard(ai.gameboard);
@@ -62,7 +43,6 @@ const game = () => {
 
 const turn = (player, opponent, row, col) => {
   player.gameboard.receiveAttack(row, col);
-  if (isGameOver(player, opponent)) return;
   let legalMove = false;
   do {
     const randomRow = getRandomCoord(player.gameboard.maxRow);
@@ -71,6 +51,7 @@ const turn = (player, opponent, row, col) => {
   }
   while (!legalMove);
   PubSub.publish('player', opponent);
+  isGameOver(player, opponent);
 };
 
 export {

@@ -1,6 +1,7 @@
 import PubSub from 'pubsub-js';
 import './assets/styles/styles.scss';
 import { game, turn } from './components/game';
+import createSetup from './components/setup';
 
 let isGameOver = false;
 
@@ -98,10 +99,13 @@ const createGameboard = (player, opponent) => {
 
   return gameBoard;
 };
+
 const component = () => {
   const container = document.createElement('div');
   container.id = 'container';
   container.appendChild(createTitle());
+
+  container.appendChild(createSetup());
 
   PubSub.subscribe('players', (msg, players) => {
     container.appendChild(createGameboard(players.player1));
@@ -112,4 +116,4 @@ const component = () => {
 };
 
 document.body.appendChild(component());
-game();
+// game();

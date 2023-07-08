@@ -66,7 +66,7 @@ describe('gameboard recieves an attack', () => {
 
   describe('missed attack', () => {
     test('attack misses', () => {
-      expect(gameboard.receiveAttack(5, 5)).toBeFalsy();
+      expect(gameboard.receiveAttack(5, 5)).toBeTruthy();
     });
 
     test('missed coordinates are logged', () => {
@@ -75,8 +75,8 @@ describe('gameboard recieves an attack', () => {
   });
 
   test('same coordinate is attacked', () => {
-    expect(gameboard.receiveAttack(0, 0)).toBe(null);
-    expect(gameboard.receiveAttack(5, 5)).toBe(null);
+    expect(gameboard.receiveAttack(0, 0)).toBeFalsy();
+    expect(gameboard.receiveAttack(5, 5)).toBeFalsy();
   });
 });
 

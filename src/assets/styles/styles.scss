@@ -1,4 +1,5 @@
 @use '_reset.scss';
+@use '_colors.scss';
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 body {
@@ -7,6 +8,8 @@ body {
   justify-content: center;
   height: 100vh;
   font-family: 'Roboto';
+  background-color: colors.$color2;
+  color: white;
 }
 
 #container {
@@ -16,7 +19,6 @@ body {
   row-gap: 30px;
   width: 75vw;
   height: 75vh;
-  border: 1px solid black;
 }
 
 #title {
@@ -51,19 +53,24 @@ body {
 .cell {
   width: 40px;
   height: 40px;
-  border: 1px solid black;
-
+  border: 1px solid white;
+  cursor: pointer;
 }
+
+.ship-hover {
+  background-color: rgba(colors.$color4, 0.6);
+}
+
 .has-ship {
-  background-color: grey;
+  background-color: rgba(255, 255, 255, 0.8); 
 }
 
 .hit {
-  background-color: red;
+  background-color: colors.$color3;
 }
 
 .miss {
-  background-color: blue;
+  background-color: colors.$color1
 }
 
 .game-over {
@@ -89,5 +96,12 @@ body {
 
 button {
   width: 90px;
-  height: 35px
+  height: 35px;
+  color: white;
+  background-color: rgba(colors.$color1, 0.5);
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
 }

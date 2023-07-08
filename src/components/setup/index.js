@@ -34,7 +34,7 @@ const handleMouseEnter = (row, col, isXAxis, isClick, length) => {
 
   cellElements.forEach((item) => {
     const tempItem = item;
-    tempItem.style.backgroundColor = 'black';
+    tempItem.classList.add('ship-hover');
     if (isClick && item) {
       item.classList.add('has-ship');
     }
@@ -51,7 +51,7 @@ const handleMouseLeave = () => {
   const allCells = document.querySelectorAll('.cell');
   allCells.forEach((item) => {
     const tempItem = item;
-    tempItem.style.backgroundColor = '';
+    tempItem.classList.remove('ship-hover')
   });
 };
 

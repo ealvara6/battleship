@@ -10,7 +10,6 @@ PubSub.subscribe('game over', () => {
 });
 
 PubSub.subscribe('game over', (msg, player) => {
-  // console.log('this was triggered');
   const parent = document.getElementById('container');
   const element = document.createElement('div');
   element.className = 'game-over';
@@ -19,13 +18,12 @@ PubSub.subscribe('game over', (msg, player) => {
 
   const retryButton = document.createElement('button');
   retryButton.id = 'retry';
-  retryButton.innerHTML = 'RETRY';
+  retryButton.innerHTML = 'Retry';
   parent.appendChild(retryButton);
 
   retryButton.addEventListener('click', () => {
     while (document.body.firstChild) document.body.removeChild(document.body.firstChild);
     isGameOver = false;
-    // game();
     document.body.appendChild(component());
   });
 });
@@ -49,7 +47,7 @@ const createPlayerName = (playerName) => {
 const createCell = (player, opponent, item) => {
   const cell = document.createElement('div');
   cell.className = 'cell';
-  if (item.ship) cell.className = 'cell has-ship';
+  if (item.ship && player.isHuman) cell.className = 'cell has-ship';
   else cell.className = 'cell no-ship';
   if (item.isHit) cell.classList.add('hit');
   if (item.isMiss) cell.classList.add('miss');

@@ -4,6 +4,10 @@ import Gameboard from './gameboard/gameboard';
 import Ship from './ship/ship';
 
 const getRandomCoord = (max) => Math.floor(Math.random() * max);
+const getRandomAxis = () => {
+  const value = Math.floor(Math.random() * 2);
+  return (value !== 0);
+};
 
 const populateBoard = (gameboard) => {
   const ships = [new Ship(2), new Ship(3), new Ship(3), new Ship(4), new Ship(5)];
@@ -11,10 +15,9 @@ const populateBoard = (gameboard) => {
   ships.forEach((ship) => {
     let legalPlacement = false;
     do {
-      console.log('this was ran');
       const xCoord = getRandomCoord(gameboard.maxRow);
       const yCoord = getRandomCoord(gameboard.maxCol);
-      if (gameboard.placeShip(xCoord, yCoord, ship, true)) legalPlacement = true;
+      if (gameboard.placeShip(xCoord, yCoord, ship, getRandomAxis())) legalPlacement = true;
     } while (!legalPlacement);
   });
 };

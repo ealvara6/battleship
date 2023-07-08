@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PubSub from 'pubsub-js';
 import './assets/styles/styles.scss';
 import { game, turn } from './components/game';
@@ -9,24 +10,24 @@ PubSub.subscribe('game over', () => {
   isGameOver = true;
 });
 
-PubSub.subscribe('game over', (msg, player) => {
-  const parent = document.getElementById('container');
-  const element = document.createElement('div');
-  element.className = 'game-over';
-  element.innerHTML = `${player.name} has won!`;
-  parent.appendChild(element);
+// PubSub.subscribe('game over', (msg, player) => {
+//   const parent = document.getElementById('container');
+//   const element = document.createElement('div');
+//   element.className = 'game-over';
+//   element.innerHTML = `${player.name} has won!`;
+//   parent.appendChild(element);
 
-  const retryButton = document.createElement('button');
-  retryButton.id = 'retry';
-  retryButton.innerHTML = 'Retry';
-  parent.appendChild(retryButton);
+//   const retryButton = document.createElement('button');
+//   retryButton.id = 'retry';
+//   retryButton.innerHTML = 'Retry';
+//   parent.appendChild(retryButton);
 
-  retryButton.addEventListener('click', () => {
-    while (document.body.firstChild) document.body.removeChild(document.body.firstChild);
-    isGameOver = false;
-    document.body.appendChild(component());
-  });
-});
+//   retryButton.addEventListener('click', () => {
+//     while (document.body.firstChild) document.body.removeChild(document.body.firstChild);
+//     isGameOver = false;
+//     document.body.appendChild(component());
+//   });
+// });
 
 const createTitle = () => {
   const title = document.createElement('div');
@@ -120,4 +121,23 @@ PubSub.subscribe('start game', (msg, shipCoords) => {
   const setup = document.getElementById('setup');
   parent.removeChild(setup);
   game(shipCoords);
+});
+
+PubSub.subscribe('game over', (msg, player) => {
+  const parent = document.getElementById('container');
+  const element = document.createElement('div');
+  element.className = 'game-over';
+  element.innerHTML = `${player.name} has won!`;
+  parent.appendChild(element);
+
+  const retryButton = document.createElement('button');
+  retryButton.id = 'retry';
+  retryButton.innerHTML = 'Retry';
+  parent.appendChild(retryButton);
+
+  retryButton.addEventListener('click', () => {
+    while (document.body.firstChild) document.body.removeChild(document.body.firstChild);
+    isGameOver = false;
+    document.body.appendChild(component());
+  });
 });

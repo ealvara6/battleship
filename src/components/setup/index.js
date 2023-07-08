@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PubSub from 'pubsub-js';
 import './setup.scss';
 
@@ -51,7 +52,7 @@ const handleMouseLeave = () => {
   const allCells = document.querySelectorAll('.cell');
   allCells.forEach((item) => {
     const tempItem = item;
-    tempItem.classList.remove('ship-hover')
+    tempItem.classList.remove('ship-hover');
   });
 };
 

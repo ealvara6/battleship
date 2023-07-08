@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PubSub from 'pubsub-js';
 import Player from './player/player';
 import Gameboard from './gameboard/gameboard';

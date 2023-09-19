@@ -6,19 +6,27 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   font-family: 'Roboto';
   background-color: colors.$color2;
   color: white;
 }
 
 #container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 100px 50px 1fr 100px;
+  display: flex;
+  flex-direction: column;
   row-gap: 30px;
-  width: 75vw;
-  height: 75vh;
+  width: 100%;
+}
+
+.gameboards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+  }
 }
 
 #title {
@@ -37,6 +45,7 @@ body {
   grid-row: 3;
   align-items: start;
   justify-items: center;
+  width: 100%;
 }
 
 .name {
@@ -48,11 +57,13 @@ body {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
+  width: 100%;
+  max-width: 420px;
 }
 
 .cell {
-  width: 40px;
-  height: 40px;
+  max-width: 40px;
+  padding-top: 100%;
   border: 1px solid white;
   cursor: pointer;
 }

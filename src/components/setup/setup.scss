@@ -17,6 +17,8 @@
   grid-row: 3;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
+  width: 100%;
+  max-width: 420px;
 }
 
 #start {

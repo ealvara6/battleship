@@ -10,25 +10,6 @@ PubSub.subscribe('game over', () => {
   isGameOver = true;
 });
 
-// PubSub.subscribe('game over', (msg, player) => {
-//   const parent = document.getElementById('container');
-//   const element = document.createElement('div');
-//   element.className = 'game-over';
-//   element.innerHTML = `${player.name} has won!`;
-//   parent.appendChild(element);
-
-//   const retryButton = document.createElement('button');
-//   retryButton.id = 'retry';
-//   retryButton.innerHTML = 'Retry';
-//   parent.appendChild(retryButton);
-
-//   retryButton.addEventListener('click', () => {
-//     while (document.body.firstChild) document.body.removeChild(document.body.firstChild);
-//     isGameOver = false;
-//     document.body.appendChild(component());
-//   });
-// });
-
 const createTitle = () => {
   const title = document.createElement('div');
   title.id = 'title';
@@ -102,13 +83,16 @@ const createGameboard = (player, opponent) => {
 const component = () => {
   const container = document.createElement('div');
   container.id = 'container';
+  const gameboards = document.createElement('div');
+  gameboards.classList.add('gameboards');
   container.appendChild(createTitle());
+  container.appendChild(gameboards);
 
   container.appendChild(createSetup());
 
   PubSub.subscribe('players', (msg, players) => {
-    container.appendChild(createGameboard(players.player1));
-    container.appendChild(createGameboard(players.player2, players.player1));
+    gameboards.appendChild(createGameboard(players.player1));
+    gameboards.appendChild(createGameboard(players.player2, players.player1));
   });
 
   return container;
